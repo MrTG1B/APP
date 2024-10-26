@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handy</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="manifest" href="static/manifest.json">
+    <link rel="image/png" href="https://tech-trekers-handy.netlify.app/static/images/logo.png">
+    <link rel="icon" type="image/png" href="https://tech-trekers-handy.netlify.app/static/images/favicon.png">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Handy">
+    <meta property="og:description" content="Handy - Your go-to app for your prosthetic Hand by Tech Trekkers">
+    <meta property="og:image" content="https://tech-trekers-handy.netlify.app/static/images/logo.png">
+    <meta property="og:url" content="https://tech-trekers-handy.netlify.app/">
+    <meta property="og:type" content="website">
+</head>
+<body>
+    <div id="root">
+
+        <header id="topFrame">
+            <button id="menuButton"><img class ="icon"src="static/images/menu.png" alt="menu icon"></button>
+            <div id="title">Handy</div>
+            <div id="false_div"></div>
+        </header>
+
+        <div id="buttonsContainer">
+            <button id="button1" class ="modeButton">
+                <img class="buttonIcon" src="static/images/large_diameter.jpg" alt="button icon">
+                <h2 class="buttonText">Large Diameter</h2>
+            </button>
+            <button id="button2" class ="modeButton">
+                <img class="buttonIcon" src="static/images/palmer.jpg" alt="button icon">
+            </button>
+            <button id="button3" class ="modeButton">
+                <img class="buttonIcon" src="static/images/extension_type.jpg" alt="button icon">
+            </button>
+            <button id="button4" class ="modeButton">
+                <img class="buttonIcon" src="static/images/parallel_extension.jpg" alt="button icon">
+            </button>
+            <button id="button5" class ="modeButton">
+                <img class="buttonIcon" src="static/images/medium_wrap.jpg" alt="button icon">
+            </button>
+            <button id="button6" class ="modeButton">
+                <img class="buttonIcon" src="static/images/5_finger_grab.jpg" alt="button icon">
+            </button>
+            <button id="button7" class ="modeButton">
+                <img class="buttonIcon" src="static/images/4_finger_grab.jpg" alt="button icon">
+            </button>
+            <button id="button8" class ="modeButton">
+                <img class="buttonIcon" src="static/images/thumb_4_finger.jpg" alt="button icon">
+            </button>
+
+            <footer id="footer">
+                <div id="footerText">© 2024 Tech Trekkers. All rights reserved.</div>
+            </footer>
+        </div>
+
+        
+        <div id="overlay">
+            <header>
+                <button id="closeButton"><img class ="icon"src="static/images/back.png" alt="close icon"></button>
+            </header>
+            <div id="profileDetails">
+                <img id="profilePic" src="static/images/profpic1.jpg">
+                <h3 id="paitientName">Tirthankar Dasgupta</h3>
+            </div>
+            <button id="handConnect" class ="overlayButton">
+                <img id="handIcon" class="icon" src="static/images/connected.png">
+                <span class="handText" id="connectText">Connect</span>
+            </button>
+            <button id ="myograph" class ="overlayButton">
+                <img id="myographIcon" class="icon" src="static/images/myograph.png">
+                <span class="handText" id="myographText">Myo-graph</span>
+            </button>
+            <button id="settings" class ="overlayButton">
+                <img id="settingsIcon" class="icon" src="static/images/settings.png">
+                <span class="handText" id="settingsText">Settings</span>
+            </button>
+            <button id="help" class ="overlayButton">
+                <img id="helpIcon" class="icon" src="static/images/help.png">
+                <span class="handText" id="helpText">Help</span>
+            </button>
+        </div>
+
+    </div>
+        <script src="static/script.js"></script>
+        <script src="static/service-worker.js"></script>
+</body>
+</html>
