@@ -6,16 +6,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const buttonsContainer = document.getElementById('buttonsContainer');
     const body = document.querySelector('body');
     const buttons = document.querySelectorAll("#buttonsContainer .modeButton");
-    const handConnectButton = document.getElementById('handConnect');
-    const handIcon = document.getElementById('handIcon');
-    const connectText = document.getElementById('connectText');
+    const handConnectButton = document.getElementById('handConnect'); // Bluetooth connection button
+    const handIcon= document.getElementById('handIcon');
+    const connectText= document.getElementById('connectText');
 
     let bluetoothDevice = null;
     let characteristic = null;
 
-    const SERVICE_UUID = '0000ffe0-0000-1000-8000-00805f9b34fb';
-    const CHARACTERISTIC_UUID = '0000ffe1-0000-1000-8000-00805f9b34fb';
+    // Correct UUIDs for HM-10
+    const SERVICE_UUID = '0000ffe0-0000-1000-8000-00805f9b34fb';  // Lowercase
+    const CHARACTERISTIC_UUID = '0000ffe1-0000-1000-8000-00805f9b34fb';  // Lowercase
 
+    // Slide overlay function
     menuButton.addEventListener('click', function() {
         slideFunction(overlay);
     });
@@ -25,18 +27,32 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function slideFunction(frame) {
-        const isOpen = frame.classList.contains('open');
-        frame.classList.toggle('open', !isOpen);
-        topFrame.classList.toggle('blur', !isOpen);
-        topFrame.classList.toggle('no-scroll', !isOpen);
-        buttonsContainer.classList.toggle('blur', !isOpen);
-        buttonsContainer.classList.toggle('no-scroll', !isOpen);
-        body.classList.toggle('no-scroll', !isOpen);
+        if (frame.classList.contains('open')) {
+            frame.classList.remove('open');
+            topFrame.classList.remove('blur');
+            topFrame.classList.remove('no-scroll');
+            buttonsContainer.classList.remove('blur');
+            buttonsContainer.classList.remove('no-scroll');
+            body.classList.remove('no-scroll');
 
-        buttons.forEach(button => {
-            button.disabled = isOpen;
-            button.style.pointerEvents = isOpen ? "none" : "auto";
-        });
+            buttons.forEach(button => {
+                button.disabled = false;
+                button.style.pointerEvents = "auto";
+            });
+
+        } else {
+            frame.classList.add('open');
+            topFrame.classList.add('blur');
+            topFrame.classList.add('no-scroll');
+            buttonsContainer.classList.add('blur');
+            buttonsContainer.classList.add('no-scroll');
+            body.classList.add('no-scroll');
+
+            buttons.forEach(button => {
+                button.disabled = true;
+                button.style.pointerEvents = "none";
+            });
+        }
     }
 
     document.addEventListener('click', function(event) {
@@ -66,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
         event.currentTarget.style.width = "200px";
         event.currentTarget.style.height = "200px";
 
-        // Get the index of the clicked button from its dataset
+        // Get the index of the clicked button (starting from 1)
         const buttonIndex = event.currentTarget.dataset.index;
 
         // Send the index to the Bluetooth device
@@ -77,15 +93,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Assign each button a unique data attribute for index and add event listeners
-    buttons.forEach((button, index) => {
-        button.dataset.index = index + 1;
+    // Add event listeners for all buttons inside buttonsContainer
+    buttons.forEach(button => {
         button.addEventListener("click", handleButtonClick);
     });
 
+    // Function to send data to Bluetooth device
     async function sendDataToBluetoothDevice(data) {
         const encoder = new TextEncoder();
-        const encodedData = encoder.encode(data.toString());
+        const encodedData = encoder.encode(data.toString()); // Convert to byte format
         try {
             await characteristic.writeValue(encodedData);
             console.log(`Data sent to device: ${data}`);
@@ -94,9 +110,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Function to handle Bluetooth device connection
     async function connectBluetoothDevice() {
         try {
+            // Set the button to "Connecting..." and update color to gray
             connectText.textContent = "Connecting...";
+            // connectText.style.color = "#808080";
+            // updateHandConnectButton('Connecting...', '#808080');
+
+            // Request the device with the correct service UUID
             bluetoothDevice = await navigator.bluetooth.requestDevice({
                 filters: [{ services: [SERVICE_UUID] }]
             });
@@ -106,15 +128,39 @@ document.addEventListener("DOMContentLoaded", function() {
             characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
 
             console.log("Connected to Bluetooth device");
+
+            // Update the button to "Connected" in green
+            // updateHandConnectButton('Connected', 'green');
             connectText.textContent = "Connected";
             connectText.style.color = "#008000";
+            // handIcon.src = "static/images/connected.png";  // Update icon to "connected"
+
         } catch (error) {
             console.log(`Bluetooth connection failed: ${error}`);
+
+            // Update the button to "Disconnected" in red if connection fails
+            // updateHandConnectButton('Disconnected', 'red');
             connectText.textContent = "Disconnected";
             connectText.style.color = "#FF5757";
-            handIcon.src = "static/images/disconnected.png";
+            handIcon.src = "static/images/disconnected.png";  // Update icon to "disconnected"
+            // handIcon.src = "static/images/disconnected.png";  // Update icon to "disconnected"
         }
     }
 
+    // Attach Bluetooth connect function to handConnect button
     handConnectButton.addEventListener('click', connectBluetoothDevice);
+
+    // Set initial state to "Connect" if the device is not connected
+    // updateHandConnectButton('Connect', '#000000');  // Default to black text when not connected
+
+    // Uncomment if you want to register a service worker
+    // if ('serviceWorker' in navigator) {
+    //     navigator.serviceWorker.register('/service-worker.js')
+    //         .then(registration => {
+    //             console.log('Service Worker registered with scope:', registration.scope);
+    //         })
+    //         .catch(error => {
+    //             console.log('Service Worker registration failed:', error);
+    //         });
+    // }
 });
