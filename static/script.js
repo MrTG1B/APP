@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Get the index of the clicked button (starting from 1)
         const buttonIndex = event.currentTarget.dataset.index;
+        console.log(buttonIndex.toString());
 
         // Send the index to the Bluetooth device
         if (characteristic) {
@@ -94,7 +95,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Add event listeners for all buttons inside buttonsContainer
-    buttons.forEach(button => {
+    buttons.forEach((button, index) => {
+        button.dataset.index = index + 1;
         button.addEventListener("click", handleButtonClick);
     });
 
