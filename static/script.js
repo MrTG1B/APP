@@ -155,14 +155,15 @@ document.addEventListener("DOMContentLoaded", function() {
     // Set initial state to "Connect" if the device is not connected
     // updateHandConnectButton('Connect', '#000000');  // Default to black text when not connected
 
-    // Uncomment if you want to register a service worker
-    // if ('serviceWorker' in navigator) {
-    //     navigator.serviceWorker.register('/service-worker.js')
-    //         .then(registration => {
-    //             console.log('Service Worker registered with scope:', registration.scope);
-    //         })
-    //         .catch(error => {
-    //             console.log('Service Worker registration failed:', error);
-    //         });
-    // }
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch(error => {
+                    console.error('Service Worker registration failed:', error);
+                });
+        });
+    }
+    
 });
