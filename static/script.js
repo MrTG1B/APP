@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // updateHandConnectButton('Connected', 'green');
             connectText.textContent = "Connected";
             connectText.style.color = "#008000";
-            // handIcon.src = "static/images/connected.png";  // Update icon to "connected"
+            handIcon.src = "static/images/connected.png";  // Update icon to "connected"
 
         } catch (error) {
             console.log(`Bluetooth connection failed: ${error}`);
