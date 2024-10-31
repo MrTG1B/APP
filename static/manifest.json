@@ -1,7 +1,7 @@
 {
   "name": "Handy",
   "short_name": "Handy",
-  "description": "Handy - Your go-to app for your prosthetic Hand by Tech Trekkers",
+  "description": "Handy - Your go-to app for your prosthetic Hand by Lumen Labs",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
